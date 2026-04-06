@@ -117,7 +117,7 @@
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
       gap: 8px;
     }
 
@@ -145,6 +145,7 @@
     .tile-c3 { background: #1a1710; border: 0.5px solid rgba(186,117,23,0.2); }
     .tile-c4 { background: #10181d; border: 0.5px solid rgba(55,138,221,0.2); }
     .tile-c5 { background: #1a1214; border: 0.5px solid rgba(212,83,126,0.2); }
+    .tile-c6 { background: #111a14; border: 0.5px solid rgba(52,199,120,0.2); }
 
     .tile-inner {
       display: flex;
@@ -187,6 +188,28 @@
     .tile-c3     .tile-name  { color: #fff8e8; }
     .tile-c4     .tile-name  { color: #e8f4ff; }
     .tile-c5     .tile-name  { color: #ffe8ef; }
+    .tile-c6     .tile-name  { color: #e8fff0; }
+
+    /* ── Kneuraudit animated ticker text ── */
+    @keyframes ticker {
+      0%   { opacity: 0; transform: translateY(6px); }
+      8%   { opacity: 1; transform: translateY(0); }
+      88%  { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-6px); }
+    }
+    .tile-c6 .tile-desc {
+      color: rgba(52,199,120,0.7);
+      opacity: 0;
+      transform: translateY(4px);
+      animation: none;
+    }
+    @media (hover: hover) {
+      .tile-c6:hover .tile-desc {
+        opacity: 1;
+        transform: translateY(0);
+        animation: ticker 4s ease-in-out infinite;
+      }
+    }
 
     /* ── Lock button: 44×44 touch target (Apple HIG) ── */
     .lock-btn {
@@ -527,6 +550,31 @@
             <div class="overlay-row">
               <button class="overlay-cancel" onclick="closeOverlay('lens')">Cancel</button>
               <button class="overlay-confirm" onclick="checkWord('lens')">Open</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Kneuraudit — green, locked -->
+      <div class="tile tile-c6">
+        <div class="tile-inner" onclick="openOverlay('audit')">
+          <div class="tile-name">Kneuraudit<sup style="font-size:0.55em;vertical-align:super">™</sup></div>
+          <div class="tile-desc">Auditors tool for audit finding and record keeping</div>
+        </div>
+        <button class="lock-btn" onclick="openOverlay('audit')" aria-label="Unlock Kneuraudit">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2.5"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </button>
+        <div class="overlay-bg" id="ov-audit">
+          <div class="overlay-card">
+            <div class="overlay-title">Kneuraudit™</div>
+            <div class="overlay-label">Access required</div>
+            <input class="overlay-input" id="in-audit" type="password" placeholder="Enter access word"
+                   autocomplete="off" inputmode="text"
+                   data-url="https://kneuralabs.github.io/audit/">
+            <div class="err-msg" id="er-audit">Incorrect — try again</div>
+            <div class="overlay-row">
+              <button class="overlay-cancel" onclick="closeOverlay('audit')">Cancel</button>
+              <button class="overlay-confirm" onclick="checkWord('audit')">Open</button>
             </div>
           </div>
         </div>
